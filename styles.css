@@ -42,7 +42,7 @@ h1 { font-size: 2rem; }
 /* SEARCH ICON BUTTON */
 .btn-search {
   width: 48px;
-  background: white url('public/icons/search.png') center/20px no-repeat;
+  background: white url('./public/icons/search.png') center/20px no-repeat;
 }
 
 
@@ -101,11 +101,11 @@ h1 { font-size: 2rem; }
 }
 /* add-to-watchlist */
 .btn-watchlist.add {
-  background-image: url('public/icons/plus.png');
+  background-image: url('./public/icons/plus.png');
 }
 /* remove-from-watchlist */
 .btn-watchlist.remove {
-  background-image: url('public/icons/minus.png');
+  background-image: url('./public/icons/minus.png');
 }
 
 /* EMPTY STATES */
