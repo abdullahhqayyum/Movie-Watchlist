@@ -11,8 +11,16 @@ function saveWatchlist(arr) {
   localStorage.setItem('watchlist', JSON.stringify(arr));
 }
 async function fetchJSON(url) {
-  const res = await fetch(url);
-  return res.json();
+  try {
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    return res.json();
+  } catch (error) {
+    console.error('Fetch error:', error);
+    return { Response: 'False', Error: 'Network error' };
+  }
 }
 
 function renderMovies(movies) {
@@ -69,21 +77,26 @@ form.addEventListener('submit', async ev => {
   const q = document.getElementById('query').value.trim();
   if (!q) return;
 
-  const search = await fetchJSON(
-    `https://www.omdbapi.com/?apikey=${API_KEY}&type=movie&s=${encodeURIComponent(q)}`
-  );
-  if (search.Response === 'False') {
-    renderMovies([]);
-    return;
-  }
+  try {
+    const search = await fetchJSON(
+      `https://www.omdbapi.com/?apikey=${API_KEY}&type=movie&s=${encodeURIComponent(q)}`
+    );
+    if (search.Response === 'False') {
+      renderMovies([]);
+      return;
+    }
 
-  const details = await Promise.all(
-    search.Search.map(m =>
-      fetchJSON(
-        `https://www.omdbapi.com/?apikey=${API_KEY}&i=${m.imdbID}&plot=short`
+    const details = await Promise.all(
+      search.Search.map(m =>
+        fetchJSON(
+          `https://www.omdbapi.com/?apikey=${API_KEY}&i=${m.imdbID}&plot=short`
+        )
       )
-    )
-  );
-  currentMovies = details.filter(m => m.Response !== 'False');
-  renderMovies(currentMovies);
+    );
+    currentMovies = details.filter(m => m.Response !== 'False');
+    renderMovies(currentMovies);
+  } catch (error) {
+    console.error('Search error:', error);
+    renderMovies([]);
+  }
 });
