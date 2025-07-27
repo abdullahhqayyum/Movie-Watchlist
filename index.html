@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Find your film</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>Find your film</h1>
+    <nav><a href="watchlist.html">My Watchlist</a></nav>
+  </header>
+
+  <main>
+    <form id="searchForm" class="search-bar">
+      <input
+        type="text"
+        id="query"
+        placeholder="Search for a movie"
+        required
+      />
+      <button type="submit" class="btn-search" title="Search"></button>
+    </form>
+
+    <div id="results" class="cards-list"></div>
+    <div id="noResults" class="empty-state">
+      Unable to find what you’re looking for. Please try another search.
+    </div>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
